@@ -57,8 +57,11 @@ function forAllPackagesDo {
                 ${action}_package ${package} "https://github.com/rock-core/base-cmake.git" "https://github.com/rock-core/base-cmake.git"
             elif [[ ${package} = "rock/base-types" ]]; then
                 ${action}_package ${package} "https://github.com/rock-core/base-types.git" "https://github.com/rock-core/base-types.git"
+            elif [[ ${package} = "lib_manager" ]]; then
+                ${action}_package ${package} "https://github.com/rock-simulation/lib_manager.git" "https://github.com/rock-simulation/lib_manager.git"
             else
-                ${action}_package ${package} "git@git.hb.dfki.de:mars/${package##*/}.git" "git://git.hb.dfki.de/mars/${package##*/}.git"
+                ${action}_package ${package} "https://github.com/rock-simulation/mars.git" "https://github.com/rock-simulation/mars.git"
+#                ${action}_package ${package} "git@git.hb.dfki.de:mars/${package##*/}.git" "git://git.hb.dfki.de/mars/${package##*/}.git"
             fi
         fi
         if [[ x${MARS_SCRIPT_ERROR} != x && ${MARS_SCRIPT_ERROR} != 0 ]]; then
