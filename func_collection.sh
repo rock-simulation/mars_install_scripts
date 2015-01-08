@@ -58,7 +58,7 @@ function forAllPackagesDo {
             elif [[ ${package} = "rock/base-types" ]]; then
                 ${action}_package ${package} "https://github.com/rock-core/base-types.git" "https://github.com/rock-core/base-types.git"
             elif [[ ${package} = "lib_manager" ]]; then
-                ${action}_package ${package} "https://github.com/rock-simulation/lib_manager.git" "https://github.com/rock-simulation/lib_manager.git"
+                ${action}_package "./${package}" "https://github.com/rock-simulation/lib_manager.git" "https://github.com/rock-simulation/lib_manager.git"
             elif [[ ${package} = "external/ros/console_bridge" ]]; then
                 ${action}_package ${package} "https://github.com/ros/console_bridge.git" "https://github.com/ros/console_bridge.git"  
             elif [[ ${package} = "external/ros/urdfdom_headers" ]]; then
@@ -67,7 +67,7 @@ function forAllPackagesDo {
                 ${action}_package ${package} "https://github.com/ros/urdfdom.git" "https://github.com/ros/urdfdom.git"
             else
                 if [[ ${action} = "fetch" ]]; then
-                    ${action}_package "mars" "https://github.com/rock-simulation/mars.git -b extern_lib_manager" "https://github.com/rock-simulation/mars.git -b extern_lib_manager"
+                    ${action}_package "./mars" "https://github.com/rock-simulation/mars.git -b extern_lib_manager" "https://github.com/rock-simulation/mars.git -b extern_lib_manager"
                 else
                     ${action}_package ${package} "https://github.com/rock-simulation/mars.git -b extern_lib_manager" "https://github.com/rock-simulation/mars.git -b extern_lib_manager"
                  fi
