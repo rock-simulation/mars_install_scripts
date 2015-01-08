@@ -8,6 +8,10 @@ external/eigen
 external/minizip 
 
 external/ode_mars
+# the following packages are needed to load URDF and SMURF models
+#external/ros/console_bridge
+#external/ros/urdfdom_headers
+#external/ros/urdfdom
 
 rock/base-cmake
 rock/base-types
@@ -30,6 +34,7 @@ mars/graphics
 mars/sim
 mars/app
 mars/scene_loader
+#mars/urdf_loader
 
 #mars/plugins/connexion_plugin
 mars/plugins/constraint_plugin
