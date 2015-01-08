@@ -244,7 +244,7 @@ function fetch_package {
             #"git://git.hb.dfki.de/mars/${package##*/}.git"
         fi
         CLONE_ERROR=0
-        git clone ${CLONE_ADDR} || CLONE_ERROR=1;
+        git clone ${CLONE_ADDR} . || CLONE_ERROR=1;
         if [[ ${CLONE_ERROR} != 0 ]]; then
             printErr "Error: Could not clone package from \"${CLONE_ADDR}\"!"
             MARS_SCRIPT_ERROR=1;
