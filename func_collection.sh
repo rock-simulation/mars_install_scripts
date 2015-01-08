@@ -60,7 +60,11 @@ function forAllPackagesDo {
             elif [[ ${package} = "lib_manager" ]]; then
                 ${action}_package ${package} "https://github.com/rock-simulation/lib_manager.git" "https://github.com/rock-simulation/lib_manager.git"
             else
-                ${action}_package ${package} "https://github.com/rock-simulation/mars.git" "https://github.com/rock-simulation/mars.git"
+                if [[ ${action} = "fetch" ]]; then
+                    ${action}_package "mars" "https://github.com/rock-simulation/mars.git -b extern_lib_manager" "https://github.com/rock-simulation/mars.git -b extern_lib_manager"
+                else
+                    ${action}_package ${package} "https://github.com/rock-simulation/mars.git -b extern_lib_manager" "https://github.com/rock-simulation/mars.git -b extern_lib_manager"
+                 fi
 #                ${action}_package ${package} "git@git.hb.dfki.de:mars/${package##*/}.git" "git://git.hb.dfki.de/mars/${package##*/}.git"
             fi
         fi
@@ -244,7 +248,7 @@ function fetch_package {
             #"git://git.hb.dfki.de/mars/${package##*/}.git"
         fi
         CLONE_ERROR=0
-        git clone ${CLONE_ADDR} . || CLONE_ERROR=1;
+        git clone ${CLONE_ADDR} || CLONE_ERROR=1;
         if [[ ${CLONE_ERROR} != 0 ]]; then
             printErr "Error: Could not clone package from \"${CLONE_ADDR}\"!"
             MARS_SCRIPT_ERROR=1;
