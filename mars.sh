@@ -37,6 +37,7 @@ fi
 
 setupConfig || exit 1
 
+eval $(parse_yaml "packages.yml" "")
 
 for arg in $*; do
     case ${arg} in
