@@ -109,10 +109,14 @@ function setupConfig {
         if [[ ! -a ${configFile} ]]; then
             echo "You must set a root directory where all repositories will be checked out and all packages will be installed"
             echo "On Windows you should use the mingw path and not the windows path and avoid trailing slashes (e.g. /c/dev/mars-git)"
-            echo -n "Enter root directory: "
-            read MARS_DEV_ROOT || return 1
-            # expand ~ by using eval
-            eval MARS_DEV_ROOT=${MARS_DEV_ROOT}
+            echo -n "Enter root directory or nothing for \"${MARS_SCRIPT_DIR%/*}\": "
+            read MARS_DEV_ROOT
+            if [[ x${MARS_DEV_ROOT} = x ]]; then
+                MARS_DEV_ROOT=${MARS_SCRIPT_DIR%/*}
+            else
+                # expand ~ by using eval
+                eval MARS_DEV_ROOT=${MARS_DEV_ROOT}
+            fi
             echo "MARS_DEV_ROOT=\"${MARS_DEV_ROOT}\"" > ${configFile}
             echo "You can specify the number of CORES you want to use when compiling packages."
             echo -n "Enter number of CORES: "
