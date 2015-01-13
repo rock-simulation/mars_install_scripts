@@ -1,20 +1,20 @@
 # use "mars.sh bootstrap" for the external libraries
 # afterwards use "mars.sh install" for the mars libraries
 
-external/yaml-cpp
-external/eigen
+yaml-cpp
+eigen
 #external/opencv
 
-external/minizip 
+minizip
 
-external/ode_mars
+ode_mars
 # the following packages are needed to load URDF and SMURF models
-#external/ros/console_bridge
-#external/ros/urdfdom_headers
-#external/ros/urdfdom
+#console_bridge
+#urdfdom_headers
+#urdfdom
 
-rock/base-cmake
-rock/base-types
+base-cmake
+base-types
 
 lib_manager
 mars/common/utils
