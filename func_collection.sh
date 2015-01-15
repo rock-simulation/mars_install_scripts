@@ -54,7 +54,9 @@ function forAllPackagesDo {
 
         p_fetch="${package_clean}_fetch_path"
         if [[ x${!p_fetch} = x ]]; then
-            p_fetch=${p}
+            p_fetch=${!p}/${package}
+        else
+            p_fetch=${!p_fetch}
         fi
         p_read="${package_clean}_read_address"
 
@@ -74,7 +76,7 @@ function forAllPackagesDo {
                 fi
             else
                 if [[ ${action} = "fetch" ]]; then
-                    ${action}_package ${package} ${!p_fetch} ${!p_read} ${!p_write}
+                    ${action}_package ${package} ${p_fetch} ${!p_read} ${!p_write}
                 else
                     ${action}_package ${package} ${!p} ${!p_read} ${!p_write}
                 fi
@@ -264,10 +266,10 @@ function fetch_package {
     setupConfig
     printBold "fetching ${package} ..."
     pushd . > /dev/null 2>&1
-    if [ -d ${MARS_DEV_ROOT}/${path}/${package} ]; then
-        if [ -d ${MARS_DEV_ROOT}/${path}/${package}/.git ]; then
+    if [ -d ${MARS_DEV_ROOT}/${path} ]; then
+        if [ -d ${MARS_DEV_ROOT}/${path}/.git ]; then
             printBold "${package} seems to already exist. updating..."
-            cd ${MARS_DEV_ROOT}/${path}/${package}
+            cd ${MARS_DEV_ROOT}/${path}
             git pull | egrep "Already up-to-date|Fast-forward" || MARS_SCRIPT_ERROR=1;
         else
             printBold "${package} exists but doesn't seem to be a git repo!"
@@ -275,9 +277,10 @@ function fetch_package {
         fi
     else
         printBold "cloning ${package}"
-        path=${MARS_DEV_ROOT}/${path}/${package}
-        mkdir -p ${path%/*}
-        cd ${path%/*}
+        path=${MARS_DEV_ROOT}/${path}
+        #${path%/*}
+        mkdir -p ${path}
+        cd ${path}
         if ${PUSH}; then
             CLONE_ADDR=${push_addr}
             #"git@git.hb.dfki.de:mars/${package##*/}.git"
@@ -286,7 +289,7 @@ function fetch_package {
             #"git://git.hb.dfki.de/mars/${package##*/}.git"
         fi
         CLONE_ERROR=0
-        git clone ${CLONE_ADDR} || CLONE_ERROR=1;
+        git clone ${CLONE_ADDR} . || CLONE_ERROR=1;
         if [[ ${CLONE_ERROR} != 0 ]]; then
             printErr "Error: Could not clone package from \"${CLONE_ADDR}\"!"
             MARS_SCRIPT_ERROR=1;

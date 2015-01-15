@@ -15,7 +15,6 @@ if [[ -f ${LAST} ]]; then
     PACKAGE_FILE=$LAST
 fi
 
-
 pushd . > /dev/null 2>&1
 
 function setScriptDir {
@@ -37,7 +36,15 @@ fi
 
 setupConfig || exit 1
 
-eval $(parse_yaml "packages.yml" "")
+SOURCES_FILE="sources.txt"
+
+while read source_file; do
+    source_file=${source_file/\#*/}
+    if [[ x${source_file} = x ]]; then
+        continue
+    fi
+    eval $(parse_yaml "${source_file}" "")
+done < ${MARS_SCRIPT_DIR}/${SOURCES_FILE}
 
 for arg in $*; do
     case ${arg} in
