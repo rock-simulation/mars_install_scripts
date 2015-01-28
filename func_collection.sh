@@ -34,70 +34,88 @@ function forAllPackagesDo {
     action=$1
     setScriptDir
     if [[ ! -f ${MARS_SCRIPT_DIR}/${PACKAGE_FILE} ]]; then
-        printErr "No ${PACKAGE_FILE}"
-        return 1
+        p="${LAST}_path"
+        if [[ x${!p} = x ]]; then
+            printErr "No ${PACKAGE_FILE} found"
+            return 1
+        else
+            handlePackage ${action} ${PACKAGE_FILE}
+            return 0
+        fi
     fi
 #    for package in $(cat ${MARS_SCRIPT_DIR}/${PACKAGE_FILE}); do
     while read package; do
-        # remove leading and trailing whitespaces
-        read -rd '' package <<< "${package}"
-        # remove everything after comment character (#)
-        package=${package/\#*/}
-        if [[ x${package} = x ]]; then
-            continue
-        fi
-        # replace dash (-) by underscore (_) for function call
-        # leave unchanged for generic version
-        package_clean=${package//-/_}
-        p="${package_clean}_path"
-
-        p_folder="${package_clean}_folder"
-        if [[ x${!p_folder} = x ]]; then
-            p_folder=${package}
-        else
-            p_folder=${!p_folder}
-        fi
-
-        p_fetch="${package_clean}_fetch_path"
-        if [[ x${!p_fetch} = x ]]; then
-            p_fetch=${!p}/${package}
-        else
-            p_fetch=${!p_fetch}
-        fi
-        p_read="${package_clean}_read_address"
-
-        p_write="${package_clean}_write_address"
-        if [[ x${!p_write} = x ]]; then
-            p_write=${p_read}
-        fi
-
-        p_cmake_options="${package_clean}_cmake_options"
-
-        if type -t ${action}_${package_clean##*/} | grep -q 'function'; then
-            ${action}_${package_clean##*/} ${!p}
-        else
-            if [[ x${!p} = x ]]; then
-                if [[ ${action} = "fetch" ]]; then
-                    ${action}_package "mars" "simulation/mars" "https://github.com/rock-simulation/mars.git" "https://github.com/rock-simulation/mars.git"
-                else
-                    ${action}_package ${package} "simulation" ${p_folder}
-                fi
-            else
-                if [[ ${action} = "fetch" ]]; then
-                    ${action}_package ${package} ${p_fetch} ${!p_read} ${!p_write}
-                else
-                    ${action}_package ${package} ${!p} ${p_folder} ${!p_cmake_options}
-                fi
-            fi
-        fi
-        if [[ x${MARS_SCRIPT_ERROR} != x && ${MARS_SCRIPT_ERROR} != 0 ]]; then
-            printErr "There was an Error. Please check the above output for more information"
-            # clear script error
-            MARS_SCRIPT_ERROR=0
-            return 1;
-        fi
+        handlePackage ${action} ${package}
     done < ${MARS_SCRIPT_DIR}/${PACKAGE_FILE}
 #    done
+}
+
+
+function handlePackage {
+    action=$1
+    package=$2
+
+    # remove leading and trailing whitespaces
+    read -rd '' package <<< "${package}"
+    # remove everything after comment character (#)
+    package=${package/\#*/}
+    if [[ x${package} = x ]]; then
+        continue
+    fi
+    # replace dash (-) by underscore (_) for function call
+    # leave unchanged for generic version
+    package_clean=${package//-/_}
+    p="${package_clean}_path"
+
+    p_folder="${package_clean}_folder"
+    if [[ x${!p_folder} = x ]]; then
+        p_folder=${package}
+    else
+        p_folder=${!p_folder}
+    fi
+
+    p_fetch="${package_clean}_fetch_path"
+    if [[ x${!p_fetch} = x ]]; then
+        p_fetch=${!p}/${package}
+    else
+        p_fetch=${!p_fetch}
+    fi
+    p_read="${package_clean}_read_address"
+
+    p_write="${package_clean}_write_address"
+    if [[ x${!p_write} = x ]]; then
+        p_write=${p_read}
+    fi
+
+    p_cmake_options="${package_clean}_cmake_options"
+
+    echo "path: simulation"
+    echo "package: ${package}"
+    echo "folder: ${p_folder}"
+
+    if type -t ${action}_${package_clean##*/} | grep -q 'function'; then
+        ${action}_${package_clean##*/} ${!p}
+    else
+        if [[ x${!p} = x ]]; then
+            if [[ ${action} = "fetch" ]]; then
+                ${action}_package "mars" "simulation/mars" "https://github.com/rock-simulation/mars.git" "https://github.com/rock-simulation/mars.git"
+            else
+                ${action}_package ${package} "simulation" ${p_folder}
+            fi
+        else
+            if [[ ${action} = "fetch" ]]; then
+                ${action}_package ${package} ${p_fetch} ${!p_read} ${!p_write}
+            else
+                ${action}_package ${package} ${!p} ${p_folder} ${!p_cmake_options}
+            fi
+        fi
+    fi
+    if [[ x${MARS_SCRIPT_ERROR} != x && ${MARS_SCRIPT_ERROR} != 0 ]]; then
+        printErr "There was an Error. Please check the above output for more information"
+        # clear script error
+        MARS_SCRIPT_ERROR=0
+        return 1;
+    fi
 }
 
 
@@ -725,10 +743,11 @@ function install_eigen {
 function clean_package {
     package=$1
     path=$2
+    folder=$3
     setupConfig
     printBold "cleaning "${package}"..."
     pushd . > /dev/null 2>&1
-    cd ${MARS_DEV_ROOT}/${path}/${package}
+    cd ${MARS_DEV_ROOT}/${path}/${folder}
     rm -rf build
     popd > /dev/null 2>&1
     printBold "...cleaning "${package}" done!"

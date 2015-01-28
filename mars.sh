@@ -11,10 +11,6 @@ done
 
 PACKAGE_FILE="packageList.txt"
 
-if [[ -f ${LAST} ]]; then
-    PACKAGE_FILE=$LAST
-fi
-
 pushd . > /dev/null 2>&1
 
 function setScriptDir {
@@ -45,6 +41,17 @@ while read source_file; do
     fi
     eval $(parse_yaml "${source_file}" "")
 done < ${MARS_SCRIPT_DIR}/${SOURCES_FILE}
+
+
+if [[ -f ${LAST} ]]; then
+    PACKAGE_FILE=$LAST
+else
+    p="${LAST}_path"
+    if [[ x${!p} != x ]]; then
+        PACKAGE_FILE=$LAST
+    fi
+fi
+
 
 for arg in $*; do
     case ${arg} in
