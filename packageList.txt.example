@@ -38,5 +38,8 @@ mars/scene_loader
 #mars/plugins/connexion_plugin
 mars/plugins/constraint_plugin
 
+mars/common/graphics/osg_text
+mars/common/graphics/osg_text_factory
+
 viz
 viz_plugin
