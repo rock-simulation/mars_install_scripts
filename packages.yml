@@ -44,3 +44,13 @@ urdfdom_headers:
 urdfdom:
   path: external/ros
   read_address: https://github.com/ros/urdfdom.git
+
+viz:
+  path: simulation/mars
+  fetch_path: simulation/mars
+  read_address: https://github.com/rock-simulation/mars.git
+
+viz_plugin:
+  path: simulation/mars/plugins
+  fetch_path: simulation/mars
+  read_address: https://github.com/rock-simulation/mars.git
