@@ -70,27 +70,23 @@ function forAllPackagesDo {
         if [[ x${!p_write} = x ]]; then
             p_write=${p_read}
         fi
+
+        p_cmake_options="${package_clean}_cmake_options"
+
         if type -t ${action}_${package_clean##*/} | grep -q 'function'; then
             ${action}_${package_clean##*/} ${!p}
         else
-            echo ${p}
             if [[ x${!p} = x ]]; then
                 if [[ ${action} = "fetch" ]]; then
                     ${action}_package "mars" "simulation/mars" "https://github.com/rock-simulation/mars.git" "https://github.com/rock-simulation/mars.git"
                 else
-                    echo "path: simulation"
-                    echo "package: ${package}"
-                    echo "folder: ${p_folder}"
                     ${action}_package ${package} "simulation" ${p_folder}
                 fi
             else
                 if [[ ${action} = "fetch" ]]; then
                     ${action}_package ${package} ${p_fetch} ${!p_read} ${!p_write}
                 else
-                    echo "path: ${!p}"
-                    echo "package: ${package}"
-                    echo "folder: ${p_folder}"
-                    ${action}_package ${package} ${!p} ${p_folder}
+                    ${action}_package ${package} ${!p} ${p_folder} ${!p_cmake_options}
                 fi
             fi
         fi
@@ -574,6 +570,7 @@ function install_package {
     packages=$1;
     path=$2;
     folder=$3;
+    cmake_options=$4;
     echo
     printBold "building "${package}" ..."
     echo
@@ -581,9 +578,9 @@ function install_package {
     mkdir -p ${MARS_DEV_ROOT}/${path}/${folder}/build
     cd ${MARS_DEV_ROOT}/${path}/${folder}/build
     if [[ ${BUILD_TYPE} == "release" ]]; then
-        cmake_release
+        cmake_release ${cmake_options}
     else
-        cmake_debug
+        cmake_debug ${cmake_options}
     fi
     make install -j${CORES} || MARS_SCRIPT_ERROR=1
     popd > /dev/null 2>&1
