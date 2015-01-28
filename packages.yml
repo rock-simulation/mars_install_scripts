@@ -45,8 +45,9 @@ urdfdom:
   path: external/ros
   read_address: https://github.com/ros/urdfdom.git
 
-viz:
+mars_viz:
   path: simulation/mars
+  folder: viz
   fetch_path: simulation/mars
   read_address: https://github.com/rock-simulation/mars.git
 

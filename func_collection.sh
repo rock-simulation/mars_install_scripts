@@ -1,4 +1,3 @@
-
 ##############################
 # helper functions
 ##############################
@@ -52,6 +51,13 @@ function forAllPackagesDo {
         package_clean=${package//-/_}
         p="${package_clean}_path"
 
+        p_folder="${package_clean}_folder"
+        if [[ x${!p_folder} = x ]]; then
+            p_folder=${package}
+        else
+            p_folder=${!p_folder}
+        fi
+
         p_fetch="${package_clean}_fetch_path"
         if [[ x${!p_fetch} = x ]]; then
             p_fetch=${!p}/${package}
@@ -72,13 +78,19 @@ function forAllPackagesDo {
                 if [[ ${action} = "fetch" ]]; then
                     ${action}_package "mars" "simulation/mars" "https://github.com/rock-simulation/mars.git" "https://github.com/rock-simulation/mars.git"
                 else
-                    ${action}_package ${package} "simulation" "https://github.com/rock-simulation/mars.git" "https://github.com/rock-simulation/mars.git"
+                    echo "path: simulation"
+                    echo "package: ${package}"
+                    echo "folder: ${p_folder}"
+                    ${action}_package ${package} "simulation" ${p_folder}
                 fi
             else
                 if [[ ${action} = "fetch" ]]; then
                     ${action}_package ${package} ${p_fetch} ${!p_read} ${!p_write}
                 else
-                    ${action}_package ${package} ${!p} ${!p_read} ${!p_write}
+                    echo "path: ${!p}"
+                    echo "package: ${package}"
+                    echo "folder: ${p_folder}"
+                    ${action}_package ${package} ${!p} ${p_folder}
                 fi
             fi
         fi
@@ -451,10 +463,11 @@ function update_package {
     category=${1%/*}
     package=${1##*/}
     path=$2
+    folder=$2
     setupConfig
     printBold "updating ${category}/${package} ..."
     pushd . > /dev/null 2>&1
-    cd ${MARS_DEV_ROOT}/${path}/${category}/${package} || MARS_SCRIPT_ERROR=1
+    cd ${MARS_DEV_ROOT}/${path}/${category}/${folder} || MARS_SCRIPT_ERROR=1
     if [[ x${MARS_SCRIPT_ERROR} == x1 ]]; then
         popd > /dev/null 2>&1
         return 1
@@ -497,6 +510,7 @@ function update_minizip {
 function patch_package {
     package=$1
     path=${MARS_DEV_ROOT}/$2
+    folder=$3
     echo ${path}
     echo ${MARS_SCRIPT_DIR}/patches/${package##*/}.patch
     setScriptDir
@@ -559,12 +573,13 @@ function patch_ode_mars {
 function install_package {
     packages=$1;
     path=$2;
+    folder=$3;
     echo
     printBold "building "${package}" ..."
     echo
     pushd . > /dev/null 2>&1
-    mkdir -p ${MARS_DEV_ROOT}/${path}/${package}/build
-    cd ${MARS_DEV_ROOT}/${path}/${package}/build
+    mkdir -p ${MARS_DEV_ROOT}/${path}/${folder}/build
+    cd ${MARS_DEV_ROOT}/${path}/${folder}/build
     if [[ ${BUILD_TYPE} == "release" ]]; then
         cmake_release
     else
