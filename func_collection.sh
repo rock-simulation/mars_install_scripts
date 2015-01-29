@@ -207,6 +207,7 @@ function setup_env {
         echo "#! /bin/sh" > env.sh
         echo "" >> env.sh
   
+        echo "export MARS_SCRIPT_DIR=\"${MARS_SCRIPT_DIR}\"" >> env.sh
         echo "export PATH=\"$""PATH:${prefix_bin}\"" >> env.sh
         
         if [ "${platform}" = "darwin" ]; then
@@ -223,7 +224,12 @@ function setup_env {
         echo "else" >> env.sh
         echo "  export PKG_CONFIG_PATH=\"${prefix_pkg}\":$""PKG_CONFIG_PATH" >> env.sh
         echo "fi" >> env.sh
-        
+        echo "" >> env.sh
+        echo "alias mars_bootstrap='bash ${MARS_SCRIPT_DIR}/mars.sh bootstrap'" >> env.sh
+        echo "alias mars_install='bash ${MARS_SCRIPT_DIR}/mars.sh install'" >> env.sh
+        echo "alias mars_rebuild='bash ${MARS_SCRIPT_DIR}/mars.sh rebuild'" >> env.sh
+        echo "alias mars_build='bash ${MARS_SCRIPT_DIR}/mars.sh'" >> env.sh
+
         cd ${prefix}/bin
         if $MSYS; then
             echo "#!/bin/bash" > cmake_debug

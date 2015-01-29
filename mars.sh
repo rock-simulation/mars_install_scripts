@@ -39,11 +39,11 @@ while read source_file; do
     if [[ x${source_file} = x ]]; then
         continue
     fi
-    eval $(parse_yaml "${source_file}" "")
+    eval $(parse_yaml "${MARS_SCRIPT_DIR}/${source_file}" "")
 done < ${MARS_SCRIPT_DIR}/${SOURCES_FILE}
 
 
-if [[ -f ${LAST} ]]; then
+if [[ -f ${MARS_SCRIPT_DIR}/${LAST} ]]; then
     PACKAGE_FILE=$LAST
 else
     p="${LAST}_path"

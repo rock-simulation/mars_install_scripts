@@ -5,29 +5,32 @@
  Version 0.1.0
 ---------------
 
+1. You should have cloned the mars_install_scripts into a clean folder which will be your MARS_DEV_ROOT folder. Everything that is compiled by the install script will be cloned and installed only into that folder.
+
 
 0. Ubuntu
 ==========
- 1. cmake, git, QT, OpenSceneGraph, libz, opencv:
+ 1. open a shell and switch to the MARS_DEV_ROOT/mars_install_scripts folder
+
+2. cmake, git, QT, OpenSceneGraph, libz, opencv:
     - sh apt_get_dep.sh
 
- 2. Get and install MARS:
-    - . install_all_mars.sh
+ 3. Get and install MARS:
+    - bash mars.sh bootstrap packageList.txt.example
 
 
 1. Mac OS X
 ============
  Using macports (http://www.macports.org) is a nice way for most of the dependencies needed.
- 1. cmake, git, pkgconfig, opencv:
+ 1. open a shell and switch to the MARS_DEV_ROOT/mars_install_scripts folder
+ 2. cmake, git, pkgconfig, opencv:
     - sh port_get_dep.sh
- 2. Qt:
+ 3. Qt:
     - install the Qt SDK from http://qt.nokia.com/products/
- 3. OpenSceneGraph:
-    - Precompiled Frameworks are available at "research/projects/all/MARS/development/software/OSG Frameworks OSX 10.6 Cocoa" and can be copied into "/Library/Frameworks".
-    - The "OSG-Plugins" folder from that location can be copied into "/Library/Application Support/OSG/".
-    - Finally, a environment variable have to be set: OSG_LIBRARY_PATH="/Library/Application Support/OSG/"
- 4. Get and install MARS:
-    - . install_all_mars.sh
+ 4. OpenSceneGraph:
+    - compile OpenSceneGraph from source (howto will be added soon here)
+ 5. Get and install MARS:
+    - bash mars.sh bootstrap packageList.txt.example
 
 
 2. Windows 7
@@ -53,4 +56,4 @@
       WARNING: don't remove the old folder just extend it with the zipped one
  7. Get and install MARS:
     - open a msys terminal
-    - and use the install script within your dev folder ". install_all_mars.sh"
+    - and use the install script within your dev folder "bash mars.sh bootstrap packageList.txt.example"
