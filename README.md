@@ -2,7 +2,7 @@
  MARS Install Scripts
 ======================
 
- ### (06.02.2015)
+ ### 06.02.2015
 
 This repository contains scripts that will install [MARS](http://github.com/rock-simulation/mars) and its dependencies for you with only minimal configuration effort on your part.
 
@@ -33,6 +33,8 @@ Detailed installation instructions
 
     $ bash mars.sh bootstrap packageList.txt.example
 
+The script will ask you for your dev folder (so your version of **mars_dev_root**), the number of cpu cores that should be used in the build process and whether you would like to build in *debug* or *release* mode. You can change these options later by editing the created *config.txt* file.
+
 > Note: The file *packageList.txt.example* is provided as an use-out-of-the-box template. It essentially lists the packages which should be installed (defined, if necessary, in packages.yml). Depending on what you want to use MARS for, this template can be modified to serve your needs.
 
 
@@ -55,6 +57,8 @@ Detailed installation instructions
 4.) Finally, you can clone and and install MARS itself:
 
     $ bash mars.sh bootstrap packageList.txt.example
+
+The script will ask you for your dev folder (so your version of **mars_dev_root**), the number of cpu cores that should be used in the build process and whether you would like to build in *debug* or *release* mode. You can change these options later by editing the created *config.txt* file.
 
 > Note: The file *packageList.txt.example* is provided as an use-out-of-the-box template. It essentially lists the packages which should be installed (defined, if necessary, in packages.yml). Depending on what you want to use MARS for, this template can be modified to serve your needs.
 
