@@ -232,6 +232,7 @@ function setup_env {
         echo "alias mars_install='bash ${MARS_SCRIPT_DIR}/mars.sh install'" >> env.sh
         echo "alias mars_rebuild='bash ${MARS_SCRIPT_DIR}/mars.sh rebuild'" >> env.sh
         echo "alias mars_build='bash ${MARS_SCRIPT_DIR}/mars.sh'" >> env.sh
+        echo ". ${MARS_SCRIPT_DIR}/auto_complete.sh" >> env.sh
 
         cd ${prefix}/bin
         if $MSYS; then
