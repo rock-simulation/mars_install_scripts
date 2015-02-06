@@ -33,7 +33,6 @@ fi
 setupConfig || exit 1
 
 SOURCES_FILE="sources.txt"
-
 while read source_file; do
     source_file=${source_file/\#*/}
     if [[ x${source_file} = x ]]; then
@@ -46,7 +45,8 @@ done < ${MARS_SCRIPT_DIR}/${SOURCES_FILE}
 if [[ -f ${MARS_SCRIPT_DIR}/${LAST} ]]; then
     PACKAGE_FILE=$LAST
 else
-    p="${LAST}_path"
+    last_clean=${LAST//-/_}
+    p="${last_clean}_path"
     if [[ x${!p} != x ]]; then
         PACKAGE_FILE=$LAST
     fi

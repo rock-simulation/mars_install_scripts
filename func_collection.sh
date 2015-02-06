@@ -34,7 +34,7 @@ function forAllPackagesDo {
     action=$1
     setScriptDir
     if [[ ! -f ${MARS_SCRIPT_DIR}/${PACKAGE_FILE} ]]; then
-        p="${LAST}_path"
+        p="${last_clean}_path"
         if [[ x${!p} = x ]]; then
             printErr "No ${PACKAGE_FILE} found"
             return 1
@@ -46,6 +46,11 @@ function forAllPackagesDo {
 #    for package in $(cat ${MARS_SCRIPT_DIR}/${PACKAGE_FILE}); do
     while read package; do
         handlePackage ${action} ${package}
+	if [[ x${MARS_SCRIPT_ERROR} != x && ${MARS_SCRIPT_ERROR} != 0 ]]; then
+        # clear script error
+        MARS_SCRIPT_ERROR=0
+        return 1;
+    fi
     done < ${MARS_SCRIPT_DIR}/${PACKAGE_FILE}
 #    done
 }
@@ -89,7 +94,7 @@ function handlePackage {
 
     p_cmake_options="${package_clean}_cmake_options"
 
-    echo "path: simulation"
+    echo "path: ${!p}"
     echo "package: ${package}"
     echo "folder: ${p_folder}"
 
@@ -112,8 +117,6 @@ function handlePackage {
     fi
     if [[ x${MARS_SCRIPT_ERROR} != x && ${MARS_SCRIPT_ERROR} != 0 ]]; then
         printErr "There was an Error. Please check the above output for more information"
-        # clear script error
-        MARS_SCRIPT_ERROR=0
         return 1;
     fi
 }
@@ -252,11 +255,6 @@ function setup_env {
             return 1
         fi
     fi
-    if [ ! -d "${prefix}/cmake" ]; then
-        cp -r "$MARS_SCRIPT_DIR/../cmake" "${prefix}/"
-    elif [ ! -f "${prefix}/cmake/mars.cmake" ]; then
-        cp "$MARS_SCRIPT_DIR/../cmake/mars.cmake" "${prefix}/cmake/"
-    fi
     popd > /dev/null 2>&1
 }
 
@@ -267,15 +265,16 @@ function setup_env {
 
 function parse_yaml {
    local prefix=$2
-   local s='[[:space:]]*' w='[a-zA-Z0-9_]*' fs=$(echo @|tr @ '\034')
+   local s='[[:space:]]*' w='[a-zA-Z0-9_-]*' fs=$(echo @|tr @ '\034')
    sed -ne "s|^\($s\):|\1|" \
         -e "s|^\($s\)\($w\)$s:$s[\"']\(.*\)[\"']$s\$|\1$fs\2$fs\3|p" \
-        -e "s|^\($s\)\($w\)$s:$s\(.*\)$s\$|\1$fs\2$fs\3|p"  $1 |
+        -e "s|^\($s\)\($w\)$s:$s\(.*\)$s\$|\1$fs\2$fs\3|p" $1 |
    awk -F$fs '{
       indent = length($1)/2;
       vname[indent] = $2;
       for (i in vname) {if (i > indent) {delete vname[i]}}
       if (length($3) > 0) {
+         sub("-", "_", vname[0])
          vn=""; for (i=0; i<indent; i++) {vn=(vn)(vname[i])("_")}
          printf("%s%s%s=\"%s\"\n", "'$prefix'",vn, $2, $3);
       }
@@ -686,11 +685,16 @@ function install_opencv {
     pushd . > /dev/null 2>&1
     cd ${MARS_DEV_ROOT}/external/OpenCV-2.3.0
     mkdir -p build; cd build;
-    # disable python support for OpenCV on Windows
+    # disable python support for OpenCV
     if [[ ${BUILD_TYPE} == "release" ]]; then
         cmake_release "-DBUILD_NEW_PYTHON_SUPPORT=OFF -DWITH_CUDA=OFF";
     else
-        cmake_debug "-DBUILD_NEW_PYTHON_SUPPORT=OFF -DWITH_CUDA=OFF";
+        # always build release on windows
+	if ${MSYS}; then
+            cmake_release "-DBUILD_NEW_PYTHON_SUPPORT=OFF -DWITH_CUDA=OFF";
+	else
+            cmake_debug "-DBUILD_NEW_PYTHON_SUPPORT=OFF -DWITH_CUDA=OFF";
+	fi
     fi
     # on MSYS opencv chokes on build with many CORES
     if ${MSYS}; then
