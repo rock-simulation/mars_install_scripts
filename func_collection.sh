@@ -685,11 +685,16 @@ function install_opencv {
     pushd . > /dev/null 2>&1
     cd ${MARS_DEV_ROOT}/external/OpenCV-2.3.0
     mkdir -p build; cd build;
-    # disable python support for OpenCV on Windows
+    # disable python support for OpenCV
     if [[ ${BUILD_TYPE} == "release" ]]; then
         cmake_release "-DBUILD_NEW_PYTHON_SUPPORT=OFF -DWITH_CUDA=OFF";
     else
-        cmake_debug "-DBUILD_NEW_PYTHON_SUPPORT=OFF -DWITH_CUDA=OFF";
+        # always build release on windows
+	if ${MSYS}; then
+            cmake_release "-DBUILD_NEW_PYTHON_SUPPORT=OFF -DWITH_CUDA=OFF";
+	else
+            cmake_debug "-DBUILD_NEW_PYTHON_SUPPORT=OFF -DWITH_CUDA=OFF";
+	fi
     fi
     # on MSYS opencv chokes on build with many CORES
     if ${MSYS}; then
