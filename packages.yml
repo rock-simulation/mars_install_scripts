@@ -15,17 +15,17 @@
 #    write_address: git write url, if not set the read address is used
 ##########################################################################
 
-yaml_cpp:
+yaml-cpp:
   path: external
 
 minizip:
   path: external
 
-base_types:
+base-types:
   path: rock
   read_address: https://github.com/rock-core/base-types.git
 
-base_cmake:
+base-cmake:
   path: rock
   read_address: https://github.com/rock-core/base-cmake.git
 
