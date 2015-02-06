@@ -1,0 +1,11 @@
+--- base-cmake/modules/Rock.cmake
++++ base-cmake/modules/Rock.cmake
+@@ -55,7 +55,7 @@ function(rock_export_includedir DIR TARGET_DIR)
+         # Making sure we create all required parent directories
+         file(MAKE_DIRECTORY ${_ROCK_EXPORT_INCLUDE_SUBDIR})
+ 
+-        execute_process(COMMAND cmake -E create_symlink ${DIR} ${_ROCK_EXPORT_INCLUDE_DIR})
++        execute_process(COMMAND cp -r ${DIR} ${_ROCK_EXPORT_INCLUDE_DIR})
+         if(NOT EXISTS ${_ROCK_EXPORT_INCLUDE_DIR})
+             message(FATAL_ERROR "Export include dir '${DIR}' to '${_ROCK_EXPORT_INCLUDE_DIR}' failed")
+         endif()
