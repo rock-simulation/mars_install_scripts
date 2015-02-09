@@ -9,14 +9,16 @@ minizip
 
 ode_mars
 # the following packages are needed to load URDF and SMURF models
-#console_bridge
-#urdfdom_headers
-#urdfdom
+console_bridge
+urdfdom_headers
+urdfdom
 
 base-cmake
 base-types
 
 lib_manager
+configmaps
+smurf_parser
 mars/common/utils
 mars/common/cfg_manager
 mars/common/data_broker
@@ -32,8 +34,10 @@ mars/gui
 mars/graphics
 mars/sim
 mars/app
+mars_entity_factory
+mars_smurf
 mars/scene_loader
-#mars/urdf_loader
+smurf_loader
 
 #mars/plugins/connexion_plugin
 mars/plugins/constraint_plugin
