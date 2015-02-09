@@ -2,9 +2,11 @@
 
 SOURCES_FILE="sources.txt"
 
+pushd . > /dev/null 2>&1
+
 function setScriptDir {
     if [[ x"${MARS_SCRIPT_DIR}" == "x" ]]; then
-        MARS_SCRIPT_DIR="$( cd "$( dirname "$0" )" && pwd )"
+        MARS_SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
     fi
     export MARS_SCRIPT_DIR=${MARS_SCRIPT_DIR}
 }
@@ -45,3 +47,5 @@ complete -o default -W "${packages1} ${packages}" mars.sh
 complete -o default -W "${packages}" mars_install
 complete -o default -W "${packages}" mars_bootstrap
 complete -o default -W "${packages}" mars_rebuild
+
+popd > /dev/null 2>&1
