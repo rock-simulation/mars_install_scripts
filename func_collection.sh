@@ -109,7 +109,7 @@ function handlePackage {
             fi
         else
             if [[ ${action} = "fetch" ]]; then
-                ${action}_package ${package} ${p_fetch} ${!p_read} ${!p_write}
+                ${action}_package ${package} ${p_fetch} "${!p_read}" "${!p_write}"
             else
                 ${action}_package ${package} ${!p} ${p_folder} ${!p_cmake_options}
             fi
