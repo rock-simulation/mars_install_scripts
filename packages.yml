@@ -42,18 +42,20 @@ smurf_parser:
   read_address: https://github.com/rock-simulation/smurf_parser.git
 
 mars_entity_factory:
-  path: simulation/mars
-  folder: entity_generation/entity_factory
+  path: simulation/mars/entity_generation
+  fetch_path: simulation/mars
+  folder: entity_factory
   read_address: https://github.com/rock-simulation/mars.git
 
 mars_smurf:
-  path: simulation/mars
-  folder: entity_generation/smurf
+  path: simulation/mars/entity_generation
+  fetch_path: simulation/mars
+  folder: smurf
   read_address: https://github.com/rock-simulation/mars.git
 
 smurf_loader:
   path: simulation/mars
-  folder: smurf_loader
+  fetch_path: simulation/mars
   read_address: https://github.com/rock-simulation/mars.git
 
 console_bridge:
