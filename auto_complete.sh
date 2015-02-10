@@ -41,6 +41,20 @@ while read source_file; do
     unset IFS
 done < ${MARS_SCRIPT_DIR}/${SOURCES_FILE}
 
+txt_files=$(ls ${MARS_SCRIPT_DIR} | grep ".txt")
+IFS='
+'
+set -f
+for line in ${txt_files}; do
+	  if [[ x${packages} != x ]]; then
+	      packages+=" "
+	  fi
+	  packages+=${line}
+done
+set +f
+unset IFS
+
+
 #echo "packages: ${packages1} ${packages}"
 
 complete -o default -W "${packages1} ${packages}" mars.sh
