@@ -29,11 +29,11 @@ mars/common/gui/cfg_manager_gui
 mars/common/gui/data_broker_gui
 mars/common/gui/log_console
 
-mars/interfaces
-mars/gui
-mars/graphics
-mars/sim
-mars/app
+mars_interfaces
+mars_gui
+mars_graphics
+mars_sim
+mars_app
 mars_entity_factory
 mars_smurf
 mars/scene_loader

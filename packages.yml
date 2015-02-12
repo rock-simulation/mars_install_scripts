@@ -82,14 +82,31 @@ mars_app:
   fetch_path: simulation/mars
   read_address: https://github.com/rock-simulation/mars.git
 
+mars_interfaces:
+  path: simulation/mars
+  folder: interfaces
+  fetch_path: simulation/mars
+  read_address: https://github.com/rock-simulation/mars.git
+
 viz_plugin:
   path: simulation/mars/plugins
   fetch_path: simulation/mars
   read_address: https://github.com/rock-simulation/mars.git
 
 mars_graphics:
-  path: simulation/mars/
+  path: simulation/mars
   folder: graphics
+  read_address: https://github.com/rock-simulation/mars.git
+
+mars_gui:
+  path: simulation/mars
+  folder: gui
+  read_address: https://github.com/rock-simulation/mars.git
+
+mars_sim:
+  path: simulation/mars
+  folder: sim
+  read_address: https://github.com/rock-simulation/mars.git
 
 config_map_gui:
   path: simulation/mars/common/gui
