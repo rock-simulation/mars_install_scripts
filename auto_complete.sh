@@ -20,7 +20,7 @@ function parse_yaml {
         -e "s|^\($s\)\($w\)$s:$s\(.*\)$s\$|\2|p" $1
 }
 
-packages1="bootstrap install rebuild clean"
+packages1="bootstrap install rebuild clean fetch update"
 packages=""
 while read source_file; do
     source_file=${source_file/\#*/}

@@ -15,6 +15,11 @@
 #    write_address: git write url, if not set the read address is used
 ##########################################################################
 
+
+tinyxml:
+  path: external
+  read_address: git://git.code.sf.net/p/tinyxml/git
+
 yaml-cpp:
   path: external
 
@@ -118,5 +123,11 @@ config_map_gui:
 
 osg_lines:
   path: simulation/mars/common/graphics
+  fetch_path: simulation/mars
+  read_address: https://github.com/rock-simulation/mars.git
+
+connexion-plugin:
+  path: simulation/mars/plugins/
+  folder: connexion_plugin
   fetch_path: simulation/mars
   read_address: https://github.com/rock-simulation/mars.git

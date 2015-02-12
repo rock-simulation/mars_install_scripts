@@ -446,7 +446,6 @@ function fetch_minizip() {
     printBold "... done fetching minizip."
 }
 
-
 # ======================
 # opencv fetch function
 # ======================
@@ -472,7 +471,6 @@ function fetch_opencv() {
     popd > /dev/null 2>&1
     printBold "... done fetching opencv."
 }
-
 
 
 #############################

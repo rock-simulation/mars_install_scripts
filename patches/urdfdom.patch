@@ -1,0 +1,32 @@
+--- urdfdom/CMakeLists.txt
++++ urdfdom/CMakeLists.txt
+@@ -57,7 +57,7 @@ add_subdirectory(urdf_parser)
+ set(PKG_NAME ${PROJECT_NAME})
+ set(PKG_LIBRARIES urdfdom_sensor urdfdom_model_state urdfdom_model urdfdom_world)
+ set(PKG_DEPENDS urdfdom_headers console_bridge)
+-set(cmake_conf_file "${CMAKE_CURRENT_SOURCE_DIR}/cmake/urdfdom-config.cmake")
++set(cmake_conf_file "cmake/urdfdom-config.cmake")
+ configure_file("${cmake_conf_file}.in" "${CMAKE_BINARY_DIR}/${cmake_conf_file}" @ONLY)
+ install(FILES ${CMAKE_BINARY_DIR}/${cmake_conf_file}
+   DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME}/cmake/ COMPONENT cmake)
+@@ -67,7 +67,7 @@ if (NOT MSVC)
+   set(PKG_DESC "Unified Robot Description Format")
+   set(PKG_DEPENDS "urdfdom_headers console_bridge") # make the list separated by spaces instead of ;
+   set(PKG_URDF_LIBS "-lurdfdom_sensor -lurdfdom_model_state -lurdfdom_model -lurdfdom_world")
+-  set(pkg_conf_file "${CMAKE_CURRENT_SOURCE_DIR}/cmake/pkgconfig/urdfdom.pc")
++  set(pkg_conf_file "cmake/pkgconfig/urdfdom.pc")
+   configure_file("${pkg_conf_file}.in" "${CMAKE_BINARY_DIR}/${pkg_conf_file}" @ONLY)
+   install(FILES ${CMAKE_BINARY_DIR}/${pkg_conf_file}
+     DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig/ COMPONENT pkgconfig)
+diff --git a/urdf_parser/CMakeLists.txt b/urdf_parser/CMakeLists.txt
+index 1058d22..0bcb1b7 100644
+--- urdfdom/urdf_parser/CMakeLists.txt
++++ urdfdom/urdf_parser/CMakeLists.txt
+@@ -1,5 +1,7 @@
+ include_directories(include)
+ 
++add_definitions(-Dconsole_bridge_EXPORTS)
++
+ add_library(urdfdom_world SHARED src/pose.cpp src/model.cpp src/link.cpp src/joint.cpp src/world.cpp)
+ target_link_libraries(urdfdom_world ${tinyxml_libraries} ${console_bridge_LIBRARIES} ${Boost_LIBRARIES})
+ set_target_properties(urdfdom_world PROPERTIES SOVERSION 0.3)

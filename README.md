@@ -48,9 +48,9 @@ The script will ask you for your dev folder (so your version of **mars_dev_root*
 2.) Get cmake, git, OpenSceneGraph, libz, and opencv by entering:
 
 
-    $ sh apt_get_dep.sh
+    $ sh port_get_dep.sh
 
-3.) Next, you need to install [Qt](http://qt-project.org), which is required among other things for MARS's gui.
+3.) Next, you need to install [Qt](http://qt-project.org), which is required among other things for MARS's gui. You can either install QT from the website (dmg) or you can use mac-ports.
 
 [OpenSceneGraph](http://www.openscenegraph.org) has to be compiled from source. Unfortunately, OSG itself does not provide a wealth of documentation on how to do this. We will try and add a short HowTo here soon.
 
