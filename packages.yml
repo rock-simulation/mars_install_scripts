@@ -20,6 +20,9 @@ tinyxml:
   path: external
   read_address: git://git.code.sf.net/p/tinyxml/git
 
+opencv:
+  path: external
+
 yaml-cpp:
   path: external
 
