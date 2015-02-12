@@ -95,16 +95,19 @@ viz_plugin:
 
 mars_graphics:
   path: simulation/mars
+  fetch_path: simulation/mars
   folder: graphics
   read_address: https://github.com/rock-simulation/mars.git
 
 mars_gui:
   path: simulation/mars
+  fetch_path: simulation/mars
   folder: gui
   read_address: https://github.com/rock-simulation/mars.git
 
 mars_sim:
   path: simulation/mars
+  fetch_path: simulation/mars
   folder: sim
   read_address: https://github.com/rock-simulation/mars.git
 
