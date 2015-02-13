@@ -134,3 +134,8 @@ connexion-plugin:
   folder: connexion_plugin
   fetch_path: simulation/mars
   read_address: https://github.com/rock-simulation/mars.git
+
+cfg_manager:
+  path: simulation/mars/common
+  fetch_path: simulation/mars
+  read_address: https://github.com/rock-simulation/mars.git
