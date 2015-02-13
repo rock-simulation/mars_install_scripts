@@ -225,7 +225,7 @@ function setup_env {
         echo "if [ x$""{PKG_CONFIG_PATH} = "x" ]; then" >> env.sh
         echo "  export PKG_CONFIG_PATH=\"${prefix_pkg}\"" >> env.sh
         echo "else" >> env.sh
-        echo "  export PKG_CONFIG_PATH=\"${prefix_pkg}\":$""PKG_CONFIG_PATH" >> env.sh
+        echo "  export PKG_CONFIG_PATH=\"${prefix_pkg}\":\"$""PKG_CONFIG_PATH"\" >> env.sh
         echo "fi" >> env.sh
         echo "" >> env.sh
         echo "alias mars_bootstrap='bash ${MARS_SCRIPT_DIR}/mars.sh bootstrap'" >> env.sh
