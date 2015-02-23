@@ -1,1 +1,1 @@
-sudo port install cmake git pkgconfig opencv
+sudo port install wget cmake boost pkgconfig tinyxml qt5-mac opencv
