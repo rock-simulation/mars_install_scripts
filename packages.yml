@@ -16,6 +16,9 @@
 ##########################################################################
 
 
+eigen:
+  path: external
+
 tinyxml:
   path: external
   read_address: git://git.code.sf.net/p/tinyxml/git

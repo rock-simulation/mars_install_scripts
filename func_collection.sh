@@ -374,8 +374,8 @@ function fetch_eigen() {
     pushd . > /dev/null 2>&1
     mkdir -p ${MARS_DEV_ROOT}/external
     cd ${MARS_DEV_ROOT}/external
-    if [ ! -e "3.0.6.tar.gz" ]; then
-        wget --no-check-certificate http://bitbucket.org/eigen/eigen/get/3.0.6.tar.gz
+    if [ ! -e "3.2.4.tar.gz" ]; then
+        wget --no-check-certificate http://bitbucket.org/eigen/eigen/get/3.2.4.tar.gz
         if [ -d "eigen3" ]; then 
             uninstall_package "external/eigen3"
             rm -rf eigen3
@@ -383,8 +383,8 @@ function fetch_eigen() {
     fi
 
     if [ ! -d "eigen3" ]; then 
-        tar -xzvf 3.0.6.tar.gz
-        mv eigen-eigen-c76e08cca8eb eigen3
+        tar -xzvf 3.2.4.tar.gz
+        mv eigen-eigen-10219c95fe65 eigen3
     fi
     cd ..
     popd > /dev/null 2>&1
@@ -478,14 +478,15 @@ function fetch_opencv() {
 #############################
 
 function update_package {
-    category=${1%/*}
-    package=${1##*/}
-    path=$2
-    folder=$2
+    packages=$1;
+    path=$2;
+    folder=$3;
     setupConfig
-    printBold "updating ${category}/${package} ..."
+    echo
+    printBold "updating ${package} ..."
+    echo
     pushd . > /dev/null 2>&1
-    cd ${MARS_DEV_ROOT}/${path}/${category}/${folder} || MARS_SCRIPT_ERROR=1
+    cd ${MARS_DEV_ROOT}/${path}/${folder} || MARS_SCRIPT_ERROR=1
     if [[ x${MARS_SCRIPT_ERROR} == x1 ]]; then
         popd > /dev/null 2>&1
         return 1
@@ -815,3 +816,44 @@ function uninstall_package {
     fi
 }
 
+
+# ======================
+# generic diff function
+# ======================
+
+function diff_package() {
+    packages=$1;
+    path=$2;
+    folder=$3;
+    echo
+    printBold "diff "${package}" ..."
+    echo
+    pushd . > /dev/null 2>&1
+    cd ${MARS_DEV_ROOT}/${path}/${folder} || MARS_SCRIPT_ERROR=1
+    if [[ x${MARS_SCRIPT_ERROR} == x1 ]]; then
+        popd > /dev/null 2>&1
+        return 1
+    fi
+    git diff
+    popd > /dev/null 2>&1
+}
+
+function diff_eigen() {
+    return 0
+}
+
+function diff_yaml_cpp() {
+    return 0
+}
+
+function diff_ode_mars() {
+    return 0
+}
+
+function diff_minizip() {
+    return 0
+}
+
+function diff_opencv() {
+    return 0
+}

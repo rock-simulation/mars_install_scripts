@@ -25,7 +25,7 @@ source ${MARS_SCRIPT_DIR}/func_collection.sh
 
 if [[ $# == 0 ]]; then
     printErr "Please specify an action. Your options are:
-       bootstrap, fetch, update, install, rebuild, clean, or uninstall"
+       bootstrap, fetch, update, install, rebuild, clean, diff, or uninstall"
     popd > /dev/null 2>&1
     exit 1
 fi
@@ -80,6 +80,9 @@ for arg in $*; do
             forAllPackagesDo clean || exit 1
             setup_env || exit 1
             forAllPackagesDo install || exit 1
+            ;;
+        diff)
+            forAllPackagesDo diff || exit 1
             ;;
         uninstall)
             forAllPackagesDo uninstall || exit 1
