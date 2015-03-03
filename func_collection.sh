@@ -5,13 +5,13 @@
 function printBold {
   if $MSYS
     then
-      echo -e "\033[32;1m"
+      echo -ne "\033[32;1m"
       echo -n "$@"
       echo -e "\033[0m"
       echo
   else
-      echo -e "\033[32;1m"
-      echo "$@"
+      echo -ne "\033[32;1m"
+      echo -n "$@"
       echo -e "\033[0m"
   fi
 }
@@ -31,6 +31,7 @@ function printErr {
 }
 
 function forAllPackagesDo {
+    handledPackages=""
     action=$1
     setScriptDir
     if [[ ! -f ${MARS_SCRIPT_DIR}/${PACKAGE_FILE} ]]; then
@@ -94,22 +95,50 @@ function handlePackage {
 
     p_cmake_options="${package_clean}_cmake_options"
 
-    echo "path: ${!p}"
-    echo "package: ${package}"
-    echo "folder: ${p_folder}"
-
     if type -t ${action}_${package_clean##*/} | grep -q 'function'; then
         ${action}_${package_clean##*/} ${!p}
     else
         if [[ x${!p} = x ]]; then
-            if [[ ${action} = "fetch" ]]; then
-                ${action}_package "mars" "simulation/mars" "https://github.com/rock-simulation/mars.git" "https://github.com/rock-simulation/mars.git"
+            if [ ${action} = "fetch" ] || [ ${action} = "update" ] || [ ${action} = "diff" ]; then
+	              handle="y"
+                IFS=' '
+                set -f
+                for line in ${handledPackages}; do
+	                  if [[ ${line} == "simulation/mars" ]]; then
+	                      handle="n"
+                        break
+	                  fi
+                done
+                set +f
+                unset IFS
+
+                if [[ ${handle} = "y" ]]; then
+                    ${action}_package "mars" "simulation/mars" "https://github.com/rock-simulation/mars.git" "https://github.com/rock-simulation/mars.git"
+                    handledPackages+="simulation/mars"
+                    handledPackages+=" "
+                fi
             else
                 ${action}_package ${package} "simulation" ${p_folder}
             fi
         else
-            if [[ ${action} = "fetch" ]]; then
-                ${action}_package ${package} ${p_fetch} "${!p_read}" "${!p_write}"
+            if [ ${action} = "fetch" ] || [ ${action} = "update" ] || [ ${action} = "diff" ]; then
+	              handle="y"
+                IFS=' '
+                set -f
+                for line in ${handledPackages}; do
+	                  if [[ ${line} == ${p_fetch} ]]; then
+	                      handle="n"
+                        break
+	                  fi
+                done
+                set +f
+                unset IFS
+
+                if [[ ${handle} = "y" ]]; then
+                    ${action}_package ${package} ${p_fetch} "${!p_read}" "${!p_write}"
+                    handledPackages+=${p_fetch}
+                    handledPackages+=" "
+                fi
             else
                 ${action}_package ${package} ${!p} ${p_folder} ${!p_cmake_options}
             fi
@@ -296,7 +325,7 @@ function fetch_package {
     push_addr=$3
     read_addr=$4
     setupConfig
-    printBold "fetching ${package} ..."
+    printBold "fetching ${path} ..."
     pushd . > /dev/null 2>&1
     if [ -d ${MARS_DEV_ROOT}/${path} ]; then
         if [ -d ${MARS_DEV_ROOT}/${path}/.git ]; then
@@ -486,7 +515,7 @@ function update_package {
     printBold "updating ${package} ..."
     echo
     pushd . > /dev/null 2>&1
-    cd ${MARS_DEV_ROOT}/${path}/${folder} || MARS_SCRIPT_ERROR=1
+    cd ${MARS_DEV_ROOT}/${path} || MARS_SCRIPT_ERROR=1
     if [[ x${MARS_SCRIPT_ERROR} == x1 ]]; then
         popd > /dev/null 2>&1
         return 1
@@ -825,11 +854,9 @@ function diff_package() {
     packages=$1;
     path=$2;
     folder=$3;
-    echo
-    printBold "diff "${package}" ..."
-    echo
+    printBold "diff "${path}" ..."
     pushd . > /dev/null 2>&1
-    cd ${MARS_DEV_ROOT}/${path}/${folder} || MARS_SCRIPT_ERROR=1
+    cd ${MARS_DEV_ROOT}/${path} || MARS_SCRIPT_ERROR=1
     if [[ x${MARS_SCRIPT_ERROR} == x1 ]]; then
         popd > /dev/null 2>&1
         return 1
