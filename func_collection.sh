@@ -360,7 +360,7 @@ function fetch_package {
     if [[ ${MARS_SCRIPT_ERROR} != 0 ]]; then
         return 1;
     else
-        printBold "... done fetching ${package}."
+        printBold "... done fetching ${path}."
     fi
     return 0;
 }
@@ -511,9 +511,7 @@ function update_package {
     path=$2;
     folder=$3;
     setupConfig
-    echo
-    printBold "updating ${package} ..."
-    echo
+    printBold "updating ${path} ..."
     pushd . > /dev/null 2>&1
     cd ${MARS_DEV_ROOT}/${path} || MARS_SCRIPT_ERROR=1
     if [[ x${MARS_SCRIPT_ERROR} == x1 ]]; then
@@ -522,7 +520,7 @@ function update_package {
     fi
     git pull
     popd > /dev/null 2>&1
-    printBold "... done updateing ${path}/${category}/${package}."
+    printBold "... done updateing ${path}."
 };
 
 function update_yaml_cpp {
