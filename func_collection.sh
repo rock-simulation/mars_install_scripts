@@ -9,7 +9,7 @@ function printBold {
       echo -n "$@"
       echo -e "\033[0m"
       echo
-  else
+    else
       echo -ne "\033[32;1m"
       echo -n "$@"
       echo -e "\033[0m"
@@ -23,7 +23,7 @@ function printErr {
       echo -n "Error: $@"
       echo -e "\033[0m"
       echo
-  else
+    else
       echo -e "\033[31;1m"
       echo "Error: $@"
       echo -e "\033[0m"
@@ -47,7 +47,7 @@ function forAllPackagesDo {
 #    for package in $(cat ${MARS_SCRIPT_DIR}/${PACKAGE_FILE}); do
     while read package; do
         handlePackage ${action} ${package}
-	if [[ x${MARS_SCRIPT_ERROR} != x && ${MARS_SCRIPT_ERROR} != 0 ]]; then
+    if [[ x${MARS_SCRIPT_ERROR} != x && ${MARS_SCRIPT_ERROR} != 0 ]]; then
         # clear script error
         MARS_SCRIPT_ERROR=0
         return 1;
@@ -100,14 +100,14 @@ function handlePackage {
     else
         if [[ x${!p} = x ]]; then
             if [ ${action} = "fetch" ] || [ ${action} = "update" ] || [ ${action} = "diff" ]; then
-	              handle="y"
+                handle="y"
                 IFS=' '
                 set -f
                 for line in ${handledPackages}; do
-	                  if [[ ${line} == "simulation/mars" ]]; then
-	                      handle="n"
+                    if [[ ${line} == "simulation/mars" ]]; then
+                        handle="n"
                         break
-	                  fi
+                    fi
                 done
                 set +f
                 unset IFS
@@ -122,14 +122,14 @@ function handlePackage {
             fi
         else
             if [ ${action} = "fetch" ] || [ ${action} = "update" ] || [ ${action} = "diff" ]; then
-	              handle="y"
+                handle="y"
                 IFS=' '
                 set -f
                 for line in ${handledPackages}; do
-	                  if [[ ${line} == ${p_fetch} ]]; then
-	                      handle="n"
+                    if [[ ${line} == ${p_fetch} ]]; then
+                        handle="n"
                         break
-	                  fi
+                    fi
                 done
                 set +f
                 unset IFS
@@ -488,7 +488,7 @@ function fetch_opencv() {
     if $MSYS; then
         if [ ! -e "opencv-2.3.0.zip" ]; then
             #wget http://sourceforge.net/projects/opencvlibrary/files/opencv-win/2.3/OpenCV-2.3.0-win-src.zip
-			wget --no-check-certificate --output-document=opencv-2.3.0.zip https://github.com/Itseez/opencv/archive/2.3.0.zip
+            wget --no-check-certificate --output-document=opencv-2.3.0.zip https://github.com/Itseez/opencv/archive/2.3.0.zip
         fi
         if [ ! -d "opencv-2.3.0.zip" ]; then 
             unzip opencv-2.3.0.zip
@@ -714,14 +714,14 @@ function install_opencv {
     mkdir -p build; cd build;
     # disable python support for OpenCV
     if [[ ${BUILD_TYPE} == "release" ]]; then
-        cmake_release "-DBUILD_NEW_PYTHON_SUPPORT=OFF -DWITH_CUDA=OFF";
+      cmake_release "-DBUILD_NEW_PYTHON_SUPPORT=OFF -DWITH_CUDA=OFF";
     else
-        # always build release on windows
-	if ${MSYS}; then
-            cmake_release "-DBUILD_NEW_PYTHON_SUPPORT=OFF -DWITH_CUDA=OFF";
-	else
-            cmake_debug "-DBUILD_NEW_PYTHON_SUPPORT=OFF -DWITH_CUDA=OFF";
-	fi
+      # always build release on windows
+      if ${MSYS}; then
+        cmake_release "-DBUILD_NEW_PYTHON_SUPPORT=OFF -DWITH_CUDA=OFF";
+      else
+         cmake_debug "-DBUILD_NEW_PYTHON_SUPPORT=OFF -DWITH_CUDA=OFF";
+      fi
     fi
     # on MSYS opencv chokes on build with many CORES
     if ${MSYS}; then
