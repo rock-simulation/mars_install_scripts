@@ -142,3 +142,8 @@ cfg_manager:
   path: simulation/mars/common
   fetch_path: simulation/mars
   read_address: https://github.com/rock-simulation/mars.git
+
+lib_manager_gui:
+  path: simulation/mars/common/gui
+  fetch_path: simulation/mars
+  read_address: https://github.com/rock-simulation/mars.git
