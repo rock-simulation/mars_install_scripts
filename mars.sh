@@ -9,8 +9,7 @@ for i in $*; do
     LAST=$i
 done
 
-if $MSYS
-  then
+if [ "${WINDIR}" != "" ]; then
     shopt -s expand_aliases
     alias make="mingw32-make"
 fi
