@@ -127,7 +127,18 @@ config_map_gui:
   fetch_path: simulation/mars
   read_address: https://github.com/rock-simulation/mars.git
 
+mars_utils:
+  path: simulation/mars/common
+  fetch_path: simulation/mars
+  folder: utils
+  read_address: https://github.com/rock-simulation/mars.git
+
 osg_lines:
+  path: simulation/mars/common/graphics
+  fetch_path: simulation/mars
+  read_address: https://github.com/rock-simulation/mars.git
+
+osg_text:
   path: simulation/mars/common/graphics
   fetch_path: simulation/mars
   read_address: https://github.com/rock-simulation/mars.git
@@ -143,7 +154,22 @@ cfg_manager:
   fetch_path: simulation/mars
   read_address: https://github.com/rock-simulation/mars.git
 
+data_broker:
+  path: simulation/mars/common
+  fetch_path: simulation/mars
+  read_address: https://github.com/rock-simulation/mars.git
+
 lib_manager_gui:
+  path: simulation/mars/common/gui
+  fetch_path: simulation/mars
+  read_address: https://github.com/rock-simulation/mars.git
+
+cfg_manager_gui:
+  path: simulation/mars/common/gui
+  fetch_path: simulation/mars
+  read_address: https://github.com/rock-simulation/mars.git
+
+main_gui:
   path: simulation/mars/common/gui
   fetch_path: simulation/mars
   read_address: https://github.com/rock-simulation/mars.git
