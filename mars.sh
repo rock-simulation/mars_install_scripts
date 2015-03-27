@@ -9,11 +9,6 @@ for i in $*; do
     LAST=$i
 done
 
-if [ "${WINDIR}" != "" ]; then
-    shopt -s expand_aliases
-    alias make="mingw32-make"
-fi
-
 PACKAGE_FILE="packageList.txt"
 
 pushd . > /dev/null 2>&1
