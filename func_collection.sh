@@ -229,6 +229,9 @@ function setup_env {
     prefix_bin=${prefix}/bin
     prefix_lib=${prefix}/lib
     prefix_pkg=${prefix}/lib/pkgconfig
+    python_version=`python -c 'import sys; print(".".join(map(str, sys.version_info[:2])))'`
+    prefix_dist_packages=${prefix}/lib/python${python_version}/dist-packages
+    prefix_site_packages=${prefix}/lib/python${python_version}/site-packages
     prefix_config=${prefix}/configuration
     
     mkdir -p ${prefix_bin}
@@ -250,6 +253,8 @@ function setup_env {
 
         echo "export ROCK_CONFIGURATION_PATH=\"${prefix_config}\"" >> env.sh
 
+        echo "" >> env.sh
+        echo "export PYTHONPATH=$""PYTHONPATH:\"${prefix_dist_packages}\":\"${prefix_site_packages}\"" >> env.sh
         echo "" >> env.sh
         echo "if [ x$""{PKG_CONFIG_PATH} = "x" ]; then" >> env.sh
         echo "  export PKG_CONFIG_PATH=\"${prefix_pkg}\"" >> env.sh
