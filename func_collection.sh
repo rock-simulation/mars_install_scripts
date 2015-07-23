@@ -513,6 +513,25 @@ function fetch_opencv() {
     printBold "... done fetching opencv."
 }
 
+# ====================
+# catch fetch function
+# ====================
+
+function fetch_catch() {
+    setupConfig
+    pushd . > /dev/null 2>&1
+    printBold "fetching catch ..."
+    mkdir -p ${MARS_DEV_ROOT}/external
+    cd ${MARS_DEV_ROOT}/external
+    if $MSYS; then
+        if [ ! -e "catch.hpp" ]; then
+            wget --no-check-certificate https://raw.githubusercontent.com/philsquared/Catch/master/single_include/catch.hpp
+        fi
+    fi
+    cd ..
+    popd > /dev/null 2>&1
+    printBold "... done fetching catch."
+}
 
 #############################
 # update functions
@@ -557,6 +576,11 @@ function update_ode_mars {
 
 function update_minizip {
     # minizip is not under revision control
+    return 0
+}
+
+function update_catch {
+    # catch is not under revision control
     return 0
 }
 
@@ -777,6 +801,18 @@ function install_eigen {
     popd > /dev/null 2>&1
     echo
     printBold "... done building external/eigen3"
+  fi
+}
+
+
+# ======================
+# catch install function
+# ======================
+
+function install_catch {
+  if [ ! -e ${MARS_DEV_ROOT}"/install/include/catch.hpp" ]; then
+    pushd . > /dev/null 2>&1
+    cp ${MARS_DEV_ROOT}/external/catch.hpp ${MARS_DEV_ROOT}/install/include/catch.hpp 
   fi
 }
 
