@@ -2,7 +2,7 @@
  MARS Install Scripts
 ======================
 
- ### 06.02.2015
+ ### (23.02.2015)
 
 This repository contains scripts that will install [MARS](http://github.com/rock-simulation/mars) and its dependencies for you with only minimal configuration effort on your part.
 
@@ -33,32 +33,70 @@ Detailed installation instructions
 
     $ bash mars.sh bootstrap packageList.txt.example
 
-The script will ask you for your dev folder (so your version of **mars_dev_root**), the number of cpu cores that should be used in the build process and whether you would like to build in *debug* or *release* mode. You can change these options later by editing the created *config.txt* file.
-
 > Note: The file *packageList.txt.example* is provided as an use-out-of-the-box template. It essentially lists the packages which should be installed (defined, if necessary, in packages.yml). Depending on what you want to use MARS for, this template can be modified to serve your needs.
 
 
-### Mac OS X
+### Mac OS X (10.9.5)
 
 1.) Using [macports](http://www.macports.org) is a nice way for most of the dependencies needed. First, open a shell and *cd* to the *mars_install_scripts* folder in your **mars_dev_root**:
 
-
     $ cd mymarsdev/mars_install_scripts
 
-2.) Get cmake, git, OpenSceneGraph, libz, and opencv by entering:
-
+2.) Get wget, cmake, boost, pkgconfig, tinyxml, Qt5, and OpenCV by entering:
 
     $ sh port_get_dep.sh
 
-3.) Next, you need to install [Qt](http://qt-project.org), which is required among other things for MARS's gui. You can either install QT from the website (dmg) or you can use mac-ports.
+3.) Next, [OpenSceneGraph](http://www.openscenegraph.org) has to be compiled from source. Following you'll find a short HowTo.
 
-[OpenSceneGraph](http://www.openscenegraph.org) has to be compiled from source. Unfortunately, OSG itself does not provide a wealth of documentation on how to do this. We will try and add a short HowTo here soon.
+  1. Get the source code for *OpenSceneGraph* (Version 3.2.1) as a zip from the [website](http://www.openscenegraph.org/downloads/developer_releases/OpenSceneGraph-3.2.1.zip) or check it out via SVN
+  ```
+  $ svn co http://svn.openscenegraph.org/osg/OpenSceneGraph/tags/OpenSceneGraph-3.2.1
+  ```
+
+  2. *cd* into the *OpenSceneGraph* folder
+  ```
+  $ cd OpenSceneGraph-3.2.1
+  ```
+
+  3. Uncomment line 820 of `CMakeLists.txt` in order to build OpenSceneGraph using *c++11* instead of *c++98*.
+  ```
+  816         IF (APPLE)
+  817             # set standard lib, clang defaults to c++0x
+  818             set(CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LANGUAGE_STANDARD "c++98")
+  819             set(CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LIBRARY "libstdc++")
+  820 #            set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++98 -stdlib=libstdc++ -Wno-overloaded-virtual -Wno-conversion")
+  821             set(WARNING_CFLAGS "")
+  822         ENDIF()
+  823 ENDIF()
+  ```
+
+  4. Create a "build" folder and *cd* into it.
+  ```
+  $ mkdir build
+  $ cd build
+  ```
+
+  5. Call *cmake* in order to configure the upcoming build process.
+  ```
+  $ cmake ..
+  ```
+  > Note: Depending whether you want to install OpenSceneGraph *globally* (in your system) or *locally* (e.g. in *mymarsdev*) you may have to add an install prefix to your *cmake* call.
+  ```
+  cmake .. -DCMAKE_INSTALL_PREFIX=mymarsdev/install
+  ```
+
+  6. Build and install *OpenSceneGraph*.
+  ```
+  $ make install
+  ```
+  > Note: If you want to install *OpenSceneGraph* *globally* you have to have admin rights in order to do so.
+  ```
+  $ sudo make install
+  ```
 
 4.) Finally, you can clone and and install MARS itself:
 
     $ bash mars.sh bootstrap packageList.txt.example
-
-The script will ask you for your dev folder (so your version of **mars_dev_root**), the number of cpu cores that should be used in the build process and whether you would like to build in *debug* or *release* mode. You can change these options later by editing the created *config.txt* file.
 
 > Note: The file *packageList.txt.example* is provided as an use-out-of-the-box template. It essentially lists the packages which should be installed (defined, if necessary, in packages.yml). Depending on what you want to use MARS for, this template can be modified to serve your needs.
 
