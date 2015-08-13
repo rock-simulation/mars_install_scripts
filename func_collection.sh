@@ -165,14 +165,19 @@ function setScriptDir {
 
 function setupConfig {
     configFile=${MARS_SCRIPT_DIR}/config.txt
+    devDir=${MARS_SCRIPT_DIR%/*}
+    if [[ "${MARS_SCRIPT_DIR%/*}" == *"bootstrap"* ]]; then
+        devDir=${MARS_SCRIPT_DIR%/*/*}
+    fi
+
     if [[ x${MARS_DEV_ROOT} == x ]]; then
         if [[ ! -a ${configFile} ]]; then
             echo "You must set a root directory where all repositories will be checked out and all packages will be installed"
             echo "On Windows you should use the mingw path and not the windows path and avoid trailing slashes (e.g. /c/dev/mars-git)"
-            echo -n "Enter root directory or nothing for \"${MARS_SCRIPT_DIR%/*}\": "
+            echo -n "Enter root directory or nothing for \"$devDir\": "
             read MARS_DEV_ROOT
             if [[ x${MARS_DEV_ROOT} = x ]]; then
-                MARS_DEV_ROOT=${MARS_SCRIPT_DIR%/*}
+                MARS_DEV_ROOT=${devDir}
             else
                 # expand ~ by using eval
                 eval MARS_DEV_ROOT=${MARS_DEV_ROOT}
