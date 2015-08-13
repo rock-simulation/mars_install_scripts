@@ -230,7 +230,13 @@ function setup_env {
     prefix_lib=${prefix}/lib
     prefix_pkg=${prefix}/lib/pkgconfig
     prefix_config=${prefix}/configuration
-    
+
+    if [ x`which python` != x ]; then
+        python_version=`python -c 'import sys; print(".".join(map(str, sys.version_info[:2])))'`
+        prefix_dist_packages=${prefix}/lib/python${python_version}/dist-packages
+        prefix_site_packages=${prefix}/lib/python${python_version}/site-packages
+    fi
+
     mkdir -p ${prefix_bin}
     cd ${MARS_DEV_ROOT}
 
@@ -249,6 +255,11 @@ function setup_env {
         fi
 
         echo "export ROCK_CONFIGURATION_PATH=\"${prefix_config}\"" >> env.sh
+
+        if [ x`which python` != x ]; then
+            echo "" >> env.sh
+            echo "export PYTHONPATH=$""PYTHONPATH:\"${prefix_dist_packages}\":\"${prefix_site_packages}\"" >> env.sh
+        fi
 
         echo "" >> env.sh
         echo "if [ x$""{PKG_CONFIG_PATH} = "x" ]; then" >> env.sh
