@@ -93,6 +93,11 @@ mars_app:
   fetch_path: simulation/mars
   read_address: https://github.com/rock-simulation/mars.git
 
+gui_app:
+  path: simulation/mars/common/gui
+  fetch_path: simulation/mars
+  read_address: https://github.com/rock-simulation/mars.git
+
 mars_interfaces:
   path: simulation/mars
   folder: interfaces
