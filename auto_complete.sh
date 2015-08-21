@@ -61,5 +61,6 @@ complete -o default -W "${packages1} ${packages}" mars.sh
 complete -o default -W "${packages}" mars_install
 complete -o default -W "${packages}" mars_bootstrap
 complete -o default -W "${packages}" mars_rebuild
+complete -o default -W "${packages}" mars_diff
 
 popd > /dev/null 2>&1
