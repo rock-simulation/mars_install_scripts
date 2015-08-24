@@ -1,23 +1,44 @@
-
  MARS Install Scripts
 ======================
 
  ### (23.02.2015)
 
-This repository contains scripts that will install [MARS](http://github.com/rock-simulation/mars) and its dependencies for you with only minimal configuration effort on your part.
+This repository contains scripts that will install
+[MARS](http://github.com/rock-simulation/mars) and its dependencies for you
+with only minimal configuration effort on your part.
 
-All you have to to is to create a clean folder that will become your MARS development folder and then clone this repository into it:
+All you have to do is to create a clean folder that will become your main
+development folder and then clone this repository into it:
 
-    $ mkdir mymarsdev
+    $ mkdir my_dev
     $ git clone https://github.com/rock-simulation/mars_install_scripts.git
 
-You can choose any name you like, but we will here refer to it as **mars_dev_root**. Everything that is compiled by these scripts will be cloned and installed into that folder only. Thus you can also use the MARS Install Scripts to create multiple independent MARS folders, which can be useful e.g. for testing.
+You can choose any name you like, but we will here refer to it as **dev_root**.
+Everything that is compiled by these scripts will be cloned and installed into
+that folder only. Thus you can also use the install scripts to create
+multiple independent `dev` folders, which can be useful e.g. for testing.
 
-> Note: If you don't have **git** installed, the install scripts can install it for you. In this case, you obviously need to download the repository manually as a zip-file and unpack it into "**mars_dev_root**/mars_install_scripts".
+> Note: If you don't have **git** installed, the install scripts can install
+it for you. In this case, you obviously need to download the repository
+manually as a zip-file and unpack it into "**dev_root**/mars_install_scripts".
+
+
+Generally, to install MARS you can use:
+
+    $ mars.sh bootstrap packageList.txt.example
+
+If you want to setup the environemnt to use the install scripts for other
+projects then mars just use:
+
+    $ mars.sh envsh
+
+> Note: You have to install the system dependencies on your own! See the
+detailed description for your operating system below.
 
 
 Detailed installation instructions
 -----------------------------------
+
 
 ### Ubuntu
 
@@ -33,7 +54,10 @@ Detailed installation instructions
 
     $ bash mars.sh bootstrap packageList.txt.example
 
-> Note: The file *packageList.txt.example* is provided as an use-out-of-the-box template. It essentially lists the packages which should be installed (defined, if necessary, in packages.yml). Depending on what you want to use MARS for, this template can be modified to serve your needs.
+> Note: The file *packageList.txt.example* is provided as an use-out-of-the-box
+template. It essentially lists the packages which should be installed (defined,
+if necessary, in packages.yml). Depending on what you want to use MARS for,
+this template can be modified to serve your needs.
 
 
 ### Mac OS X (10.9.5)
