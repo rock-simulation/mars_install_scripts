@@ -27,13 +27,14 @@ Generally, to install MARS you can use:
 
     $ mars.sh bootstrap packageList.txt.example
 
+> Note: You have to install the system dependencies on your own! See the
+detailed description for your operating system below.
+
+
 If you want to setup the environemnt to use the install scripts for other
 projects then mars just use:
 
     $ mars.sh envsh
-
-> Note: You have to install the system dependencies on your own! See the
-detailed description for your operating system below.
 
 
 Detailed installation instructions
