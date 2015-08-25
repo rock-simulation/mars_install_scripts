@@ -10,7 +10,7 @@ with only minimal configuration effort on your part.
 All you have to do is to create a clean folder that will become your main
 development folder and then clone this repository into it:
 
-    $ mkdir my_dev
+    $ mkdir dev_root
     $ git clone https://github.com/rock-simulation/mars_install_scripts.git
 
 You can choose any name you like, but we will here refer to it as **dev_root**.
@@ -32,7 +32,7 @@ detailed description for your operating system below.
 
 
 If you want to setup the environment to use the install scripts for other
-projects then mars just use:
+projects than MARS just use:
 
     $ bash mars.sh envsh
 
@@ -43,9 +43,9 @@ Detailed installation instructions
 
 ### Ubuntu
 
-1.) Open a shell and *cd* to the *mars_install_scripts* folder in your **mars_dev_root**:
+1.) Open a shell and *cd* to the *mars_install_scripts* folder in your **dev_root**:
 
-    $ cd mymarsdev/mars_install_scripts
+    $ cd dev_root/mars_install_scripts
 
 2.) Take care of cmake, git, QT, OpenSceneGraph, libz, and opencv by entering:
 
@@ -65,7 +65,7 @@ this template can be modified to serve your needs.
 
 1.) Using [macports](http://www.macports.org) is a nice way for most of the dependencies needed. First, open a shell and *cd* to the *mars_install_scripts* folder in your **mars_dev_root**:
 
-    $ cd mymarsdev/mars_install_scripts
+    $ cd dev_root/mars_install_scripts
 
 2.) Get wget, cmake, boost, pkgconfig, tinyxml, Qt5, and OpenCV by entering:
 
