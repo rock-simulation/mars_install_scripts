@@ -1,7 +1,7 @@
  MARS Install Scripts
 ======================
 
- ### (23.02.2015)
+ ### (25.08.2015)
 
 This repository contains scripts that will install
 [MARS](http://github.com/rock-simulation/mars) and its dependencies for you
@@ -25,16 +25,16 @@ manually as a zip-file and unpack it into "**dev_root**/mars_install_scripts".
 
 Generally, to install MARS you can use:
 
-    $ mars.sh bootstrap packageList.txt.example
+    $ bash mars.sh bootstrap packageList.txt.example
 
 > Note: You have to install the system dependencies on your own! See the
 detailed description for your operating system below.
 
 
-If you want to setup the environemnt to use the install scripts for other
+If you want to setup the environment to use the install scripts for other
 projects then mars just use:
 
-    $ mars.sh envsh
+    $ bash mars.sh envsh
 
 
 Detailed installation instructions
