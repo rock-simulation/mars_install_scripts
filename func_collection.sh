@@ -666,7 +666,10 @@ function install_package {
     printBold "building "${package}" ..."
     echo
     pushd . > /dev/null 2>&1
-    if [[ -f ${MARS_DEV_ROOT}/${path}/${folder}/CMakeLists.txt ]]; then
+    manifest=${MARS_DEV_ROOT}/${path}/${folder}/manifest.xml
+    if grep -qs "no_install" ${manifest}; then
+        printBold "... skip install of ${category}/${package}"
+    else
         mkdir -p ${MARS_DEV_ROOT}/${path}/${folder}/build
         cd ${MARS_DEV_ROOT}/${path}/${folder}/build
         if [[ ${BUILD_TYPE} == "release" ]]; then
@@ -681,8 +684,6 @@ function install_package {
         fi
         echo
         printBold "... done building ${category}/${package}."
-    else
-        printBold "... no CMakeLists.txt found skip install of ${category}/${package}"
     fi
 }
 
