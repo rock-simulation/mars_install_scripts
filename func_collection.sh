@@ -666,20 +666,24 @@ function install_package {
     printBold "building "${package}" ..."
     echo
     pushd . > /dev/null 2>&1
-    mkdir -p ${MARS_DEV_ROOT}/${path}/${folder}/build
-    cd ${MARS_DEV_ROOT}/${path}/${folder}/build
-    if [[ ${BUILD_TYPE} == "release" ]]; then
-        cmake_release ${cmake_options}
+    if [[ -f ${MARS_DEV_ROOT}/${path}/${folder}/CMakeLists.txt ]]; then
+        mkdir -p ${MARS_DEV_ROOT}/${path}/${folder}/build
+        cd ${MARS_DEV_ROOT}/${path}/${folder}/build
+        if [[ ${BUILD_TYPE} == "release" ]]; then
+            cmake_release ${cmake_options}
+        else
+            cmake_debug ${cmake_options}
+        fi
+        make install -j${CORES} || MARS_SCRIPT_ERROR=1
+        popd > /dev/null 2>&1
+        if [[ x${MARS_SCRIPT_ERROR} == "x1" ]]; then
+            return 1
+        fi
+        echo
+        printBold "... done building ${category}/${package}."
     else
-        cmake_debug ${cmake_options}
+        printBold "... no CMakeLists.txt found skip install of ${category}/${package}"
     fi
-    make install -j${CORES} || MARS_SCRIPT_ERROR=1
-    popd > /dev/null 2>&1
-    if [[ x${MARS_SCRIPT_ERROR} == "x1" ]]; then
-        return 1
-    fi
-    echo
-    printBold "... done building ${category}/${package}."
 }
 
 # =========================
