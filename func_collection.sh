@@ -477,7 +477,7 @@ function fetch_minizip() {
     mkdir -p ${MARS_DEV_ROOT}/external
     cd ${MARS_DEV_ROOT}/external
     if [ ! -e "unzip11.zip" ]; then
-        wget http://www.winimage.com/zLibDll/unzip11.zip
+        wget http://www.winimage.com/zLibDll/unzip101e.zip
         if [ -d "minizip" ]; then 
             uninstall_package "external/minizip"
             rm -rf minizip
@@ -485,7 +485,7 @@ function fetch_minizip() {
     fi
 
     if [ ! -d "minizip" ]; then 
-        unzip unzip11.zip -d minizip
+        unzip unzip101e.zip -d minizip
     fi
     cd ..
     popd > /dev/null 2>&1
