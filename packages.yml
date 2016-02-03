@@ -71,15 +71,15 @@ smurf_loader:
 
 console_bridge:
   path: external/ros
-  read_address: https://github.com/ros/console_bridge.git
+  read_address: https://github.com/rock-simulation/console_bridge.git
 
 urdfdom_headers:
   path: external/ros
-  read_address: https://github.com/ros/urdfdom_headers.git
+  read_address: https://github.com/rock-simulation/urdfdom_headers.git
 
 urdfdom:
   path: external/ros
-  read_address: https://github.com/ros/urdfdom.git
+  read_address: https://github.com/rock-simulation/urdfdom.git
 
 mars_viz:
   path: simulation/mars
