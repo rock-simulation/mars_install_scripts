@@ -69,6 +69,11 @@ smurf_loader:
   fetch_path: simulation/mars
   read_address: https://github.com/rock-simulation/mars.git
 
+scene_loader:
+  path: simulation/mars
+  fetch_path: simulation/mars
+  read_address: https://github.com/rock-simulation/mars.git
+
 console_bridge:
   path: external/ros
   read_address: https://github.com/rock-simulation/console_bridge.git
@@ -156,13 +161,11 @@ connexion-plugin:
 
 SkyDomePlugin:
   path: simulation/mars/plugins/
-  folder: connexion_plugin
   fetch_path: simulation/mars
   read_address: https://github.com/rock-simulation/mars.git
 
 entity_view:
   path: simulation/mars/plugins/
-  folder: connexion_plugin
   fetch_path: simulation/mars
   read_address: https://github.com/rock-simulation/mars.git
 
@@ -182,6 +185,11 @@ lib_manager_gui:
   read_address: https://github.com/rock-simulation/mars.git
 
 cfg_manager_gui:
+  path: simulation/mars/common/gui
+  fetch_path: simulation/mars
+  read_address: https://github.com/rock-simulation/mars.git
+
+log_console:
   path: simulation/mars/common/gui
   fetch_path: simulation/mars
   read_address: https://github.com/rock-simulation/mars.git
