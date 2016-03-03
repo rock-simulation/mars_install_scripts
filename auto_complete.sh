@@ -54,13 +54,15 @@ done
 set +f
 unset IFS
 
-
-#echo "packages: ${packages1} ${packages}"
-
-complete -o default -W "${packages1} ${packages}" mars.sh
-complete -o default -W "${packages}" mars_install
-complete -o default -W "${packages}" mars_bootstrap
-complete -o default -W "${packages}" mars_rebuild
-complete -o default -W "${packages}" mars_diff
+# use the bash-builtin to provide basic package-completions.
+#
+# note that zsh for example does not know this commend.
+if [ -n "$BASH_VERSION" ]; then
+    complete -o default -W "${packages1} ${packages}" mars.sh
+    complete -o default -W "${packages}" mars_install
+    complete -o default -W "${packages}" mars_bootstrap
+    complete -o default -W "${packages}" mars_rebuild
+    complete -o default -W "${packages}" mars_diff
+fi
 
 popd > /dev/null 2>&1
