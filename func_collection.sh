@@ -822,7 +822,8 @@ function install_eigen {
 function install_catch {
   if [ ! -e ${MARS_DEV_ROOT}"/install/include/catch.hpp" ]; then
     pushd . > /dev/null 2>&1
-    cp ${MARS_DEV_ROOT}/external/catch.hpp ${MARS_DEV_ROOT}/install/include/catch.hpp 
+    mkdir ${MARS_DEV_ROOT}/install/include/catch
+    cp ${MARS_DEV_ROOT}/external/catch.hpp ${MARS_DEV_ROOT}/install/include/catch/catch.hpp 
     echo "Name: catch
 Description: A modern, C++-native, header-only, framework for unit-tests, TDD and BDD
 Version: dev
