@@ -1,6 +1,6 @@
- # MARS Install Scripts
+# MARS Install Scripts
 
- *(last updated 20.04.2016)*
+*(last updated 20.04.2016)*
 
 This repository contains scripts that will install
 [MARS](http://github.com/rock-simulation/mars) and its dependencies for you
