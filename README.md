@@ -1,7 +1,6 @@
- MARS Install Scripts
-======================
+ # MARS Install Scripts
 
- ### (25.08.2015)
+ *(last updated 20.04.2016)*
 
 This repository contains scripts that will install
 [MARS](http://github.com/rock-simulation/mars) and its dependencies for you
@@ -43,8 +42,7 @@ projects than MARS run the following source command in **dev_root**:
     $ bash mars.sh envsh
 
 
-Installation on other Systems than Ubuntu
------------------------------------------
+## Installation on other Systems than Ubuntu
 
 ### Mac OS X (10.9.5)
 
