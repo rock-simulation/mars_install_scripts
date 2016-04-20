@@ -47,3 +47,4 @@ mars/common/graphics/osg_text_factory
 
 mars_viz
 viz_plugin
+SkyDomePlugin
