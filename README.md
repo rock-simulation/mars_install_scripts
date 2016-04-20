@@ -15,7 +15,7 @@ You can choose any name you like, but we will here refer to it as **dev_root**:
 
 Everything that is compiled by these scripts will be cloned and installed into
 that folder only. Thus you can also use the install scripts to create
-multiple independent `dev` folders, which can be useful e.g. for testing.
+multiple independent *dev* folders, which can be useful e.g. for testing.
 
 > Note: If you don't have **git** installed, the install scripts can install
 it for you. In this case, you obviously need to download the repository
@@ -23,12 +23,15 @@ manually as a zip-file and unpack it into "**dev_root**/mars_install_scripts".
 
 The next step is to create your *packageList.txt* which contains a list of all packages that will be built upon executing the build commands. To do that, run:
 
+    $ cd mars_install_scripts
     $ cp packageList.txt.example packageList.txt
 
 It may be a good idea to have a look at the file and check if everything is set up according to your purposes.
 If that's the case, run the scripts and install MARS:
 
     $ bash mars.sh bootstrap packageList.txt
+    
+You will be asked a number of questions, namely where your root directory should be (just hit enter to accept the default), how many processor cores you want to be using for building (enter as many as you can spare) and whether you want to build MARS as *debug* or *release*. If you want to develop with MARS, choose *debug*; choose *release* if you run a well-tested setup for which performance is critical.
 
 In case there is a problem with missing system dependencies, you can execute:
 
