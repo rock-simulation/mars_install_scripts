@@ -7,13 +7,13 @@ This repository contains scripts that will install
 [MARS](http://github.com/rock-simulation/mars) and its dependencies for you
 with only minimal configuration effort on your part.
 
-All you have to do is to create a clean folder that will become your main
-development folder and then clone this repository into it:
+Create a new folder that will become your main development folder and then clone this repository into it.
+You can choose any name you like, but we will here refer to it as **dev_root**:
 
     $ mkdir dev_root
-    $ git clone https://github.com/rock-simulation/mars_install_scripts.git
+    $ cd dev_root
+    dev_root$ git clone https://github.com/rock-simulation/mars_install_scripts.git
 
-You can choose any name you like, but we will here refer to it as **dev_root**.
 Everything that is compiled by these scripts will be cloned and installed into
 that folder only. Thus you can also use the install scripts to create
 multiple independent `dev` folders, which can be useful e.g. for testing.
@@ -22,44 +22,29 @@ multiple independent `dev` folders, which can be useful e.g. for testing.
 it for you. In this case, you obviously need to download the repository
 manually as a zip-file and unpack it into "**dev_root**/mars_install_scripts".
 
+The next step is to create your *packageList.txt* which contains a list of all packages that will be built upon executing the build commands. To do that, run:
 
-Generally, to install MARS you can use:
+    $ cp packageList.txt.example packageList.txt
 
-    $ bash mars.sh bootstrap packageList.txt.example
+It may be a good idea to have a look at the file and check if everything is set up according to your purposes.
+If that's the case, run the scripts and install MARS:
 
-> Note: You have to install the system dependencies on your own! See the
-detailed description for your operating system below.
+    $ bash mars.sh bootstrap packageList.txt
 
+In case there is a problem with missing system dependencies, you can execute:
+
+    $ sh apt_get_dep.sh
+ 
+to install cmake, git, QT, OpenSceneGraph, libz, and opencv and then run the above bootstrap command again.
 
 If you want to setup the environment to use the install scripts for other
-projects than MARS just use:
+projects than MARS run the following source command in **dev_root**:
 
     $ bash mars.sh envsh
 
 
-Detailed installation instructions
------------------------------------
-
-
-### Ubuntu
-
-1.) Open a shell and *cd* to the *mars_install_scripts* folder in your **dev_root**:
-
-    $ cd dev_root/mars_install_scripts
-
-2.) Take care of cmake, git, QT, OpenSceneGraph, libz, and opencv by entering:
-
-    $ sh apt_get_dep.sh
-
-3.) Finally, bootstrap and install MARS' components:
-
-    $ bash mars.sh bootstrap packageList.txt.example
-
-> Note: The file *packageList.txt.example* is provided as an use-out-of-the-box
-template. It essentially lists the packages which should be installed (defined,
-if necessary, in packages.yml). Depending on what you want to use MARS for,
-this template can be modified to serve your needs.
-
+Installation on other Systems than Ubuntu
+-----------------------------------------
 
 ### Mac OS X (10.9.5)
 
